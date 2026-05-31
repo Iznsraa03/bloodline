@@ -1,4 +1,6 @@
-import { PrismaClient } from "@/src/generated/prisma/client";
+// Using relative import to avoid Turbopack alias resolution issues
+// with Prisma v7's generated ESM client that uses import.meta.url
+import { PrismaClient } from "../../src/generated/prisma/client";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 
 const globalForPrisma = globalThis as unknown as {
