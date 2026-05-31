@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* ============================================================
+   BloodLink — Design Tokens (Stitch: Remote Blood Hub)
+   Vital Ledger Design System
+   ============================================================ */
+
+:root {
+  /* --- Primary Palette --- */
+  --primary: #2563EB;
+  --primary-dark: #004AC6;
+  --primary-light: #B4C5FF;
+  --primary-container: #DBE1FF;
+  --on-primary: #FFFFFF;
+
+  /* --- Status Colors --- */
+  --success: #10B981;
+  --success-container: #6CF8BB;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --danger-dark: #AB0B1C;
+  --danger-container: #FFDAD6;
+
+  /* --- Neutral / Surface --- */
+  --background: #F9F9FF;
+  --surface: #FFFFFF;
+  --surface-container: #E7EEFF;
+  --surface-container-high: #DEE8FF;
+  --surface-variant: #D8E3FB;
+  --outline: #737686;
+  --outline-variant: #C3C6D7;
+
+  /* --- Text --- */
+  --text-primary: #111C2D;
+  --text-secondary: #434655;
+  --text-on-primary: #FFFFFF;
+  --text-inverse: #ECF1FF;
+
+  /* --- Shadows --- */
+  --shadow-sm: 0 1px 2px rgba(17, 28, 45, 0.05);
+  --shadow-md: 0 4px 12px rgba(17, 28, 45, 0.08);
+  --shadow-lg: 0 8px 24px rgba(17, 28, 45, 0.12);
+}
+
+/* --- Tailwind v4 Theme Inline (Design Tokens) --- */
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
+  --color-primary-container: var(--primary-container);
+
+  --color-success: var(--success);
+  --color-success-container: var(--success-container);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-danger-dark: var(--danger-dark);
+  --color-danger-container: var(--danger-container);
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-variant: var(--surface-variant);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+}
+
+/* ============================================================
+   Base Styles
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-container);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--outline-variant);
+  border-radius: 9999px;
+}
+
+/* --- Safe area for PWA standalone --- */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 64px);
+  }
+}

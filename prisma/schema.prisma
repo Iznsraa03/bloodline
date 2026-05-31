@@ -1,0 +1,87 @@
+// BloodLink — Prisma Schema
+// Sistem Informasi Darah (Daerah Terpencil)
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ============================================================
+// 1. Fasilitas Kesehatan (Faskes)
+// ============================================================
+model FasilitasKesehatan {
+  id        String   @id @default(cuid())
+  nama      String
+  alamat    String
+  lat       Float
+  lng       Float
+  kontak    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  stokDarah  StokDarah[]
+  permintaan PermintaanDarah[]
+
+  @@map("fasilitas_kesehatan")
+}
+
+// ============================================================
+// 2. Stok Darah (per faskes, per golongan & rhesus)
+// ============================================================
+model StokDarah {
+  id        String   @id @default(cuid())
+  golongan  String   // A, B, AB, O
+  rhesus    String   // + atau -
+  jumlah    Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  // Relation ke Faskes
+  faskesId String
+  faskes   FasilitasKesehatan @relation(fields: [faskesId], references: [id], onDelete: Cascade)
+
+  @@unique([faskesId, golongan, rhesus])
+  @@map("stok_darah")
+}
+
+// ============================================================
+// 3. Pendonor Siaga
+// ============================================================
+model PendonorSiaga {
+  id            String   @id @default(cuid())
+  nama          String
+  golonganDarah String   // A, B, AB, O
+  rhesus        String   // + atau -
+  telepon       String
+  desa          String
+  wilayah       String
+  statusAktif   String   @default("AKTIF") // AKTIF | NONAKTIF
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("pendonor_siaga")
+}
+
+// ============================================================
+// 4. Permintaan Darah (Emergency Requests)
+// ============================================================
+model PermintaanDarah {
+  id         String   @id @default(cuid())
+  golongan   String   // A, B, AB, O
+  rhesus     String   // + atau -
+  jumlah     Int
+  status     String   @default("MENDESAK") // MENDESAK | TERPENUHI | DIBATALKAN
+  keterangan String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relation ke Faskes
+  faskesId String
+  faskes   FasilitasKesehatan @relation(fields: [faskesId], references: [id], onDelete: Cascade)
+
+  @@map("permintaan_darah")
+}
